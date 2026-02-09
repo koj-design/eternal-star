@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const INITIAL_STATE = {
+export const INITIAL_STATE = {
     size: { width: 1080, height: 1080, name: 'SNS Square' },
     content: {
         title: 'Main Copy',

@@ -1,6 +1,6 @@
-import { Save, FolderOpen } from 'lucide-react';
+import { Save, FolderOpen, RotateCcw } from 'lucide-react';
 
-export const PersistenceControls = ({ banner }) => {
+export const PersistenceControls = ({ banner, onReset }) => {
 
     const handleSave = () => {
         // Explicitly save to local storage (redundant with auto-save but good for manual confirmation)
@@ -17,6 +17,31 @@ export const PersistenceControls = ({ banner }) => {
             flexDirection: 'column',
             gap: '8px'
         }}>
+            <button
+                onClick={() => {
+                    if (window.confirm('Are you sure you want to reset all settings to default? This cannot be undone.')) {
+                        onReset();
+                    }
+                }}
+                style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '8px',
+                    padding: '12px',
+                    fontSize: '1rem',
+                    fontWeight: 600,
+                    backgroundColor: 'var(--color-bg-main)',
+                    border: '1px solid var(--color-border)',
+                    borderRadius: 'var(--radius-md)',
+                    cursor: 'pointer',
+                    color: 'var(--color-text-main)',
+                    width: '100%'
+                }}
+                title="Reset to default settings"
+            >
+                <RotateCcw size={18} /> Reset
+            </button>
             <button
                 onClick={handleSave}
                 style={{

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { INITIAL_STATE } from '../../hooks/useBannerState';
 import { Moon, Sun, LayoutGrid } from 'lucide-react';
 import { SizeController } from '../Controls/SizeController';
 import { TextController } from '../Controls/TextController';
@@ -56,7 +57,7 @@ export const Sidebar = ({ banner, setBannerState, updateSize, updateContent, upd
             <ImageController image={banner.image} updateImage={updateImage} />
 
             {/* Persistence Controls at Bottom */}
-            <PersistenceControls banner={banner} />
+            <PersistenceControls banner={banner} onReset={() => setBannerState(INITIAL_STATE)} onSave={onSave} />
         </div>
     );
 };
