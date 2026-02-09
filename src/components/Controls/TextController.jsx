@@ -28,7 +28,7 @@ export const TextController = ({ content, updateContent }) => {
                 <Input
                     value={content.cta}
                     onChange={(e) => updateContent('cta', e.target.value)}
-                    placeholder="e.g. Shop Now"
+                    placeholder="CTA Text"
                 />
             </div>
         </Section>

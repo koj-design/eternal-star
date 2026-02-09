@@ -5,7 +5,7 @@ export const INITIAL_STATE = {
     content: {
         title: 'Main Copy',
         subtitle: 'Please enter a sub-copy',
-        cta: 'CTA'
+        cta: 'CTA Text'
     },
     style: {
         fontFamily: 'Pretendard',
