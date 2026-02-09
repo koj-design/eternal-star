@@ -4,21 +4,21 @@ export const TextController = ({ content, updateContent }) => {
     return (
         <Section title="Text Content">
             <div>
-                <Label>Title</Label>
+                <Label>Copy</Label>
                 <TextArea
                     value={content.title}
                     onChange={(e) => updateContent('title', e.target.value)}
-                    placeholder="Enter title..."
+                    placeholder="Enter copy..."
                     rows={2}
                 />
             </div>
 
             <div>
-                <Label>Subtitle</Label>
+                <Label>Sub Copy</Label>
                 <TextArea
                     value={content.subtitle}
                     onChange={(e) => updateContent('subtitle', e.target.value)}
-                    placeholder="Enter subtitle..."
+                    placeholder="Enter sub copy..."
                     rows={3}
                 />
             </div>

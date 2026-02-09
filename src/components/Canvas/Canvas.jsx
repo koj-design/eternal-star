@@ -7,6 +7,12 @@ export const Canvas = forwardRef(({ banner, sizeOverride, mediaOverride, videoPl
 
     const isVideo = mediaOverride?.type?.startsWith('video');
 
+    // Calculate layout scale based on reference width (banner state size)
+    // This ensures text/padding scales down for small variations (like Shared IT 220px)
+    // while keeping the proportions relative to the user's design.
+    const referenceWidth = banner.size.width || 1080;
+    const layoutScale = Math.min(1, size.width / referenceWidth);
+
     const containerStyle = {
         width: `${size.width}px`,
         height: `${size.height}px`,
@@ -18,8 +24,8 @@ export const Canvas = forwardRef(({ banner, sizeOverride, mediaOverride, videoPl
         flexDirection: 'column',
         alignItems: style.align === 'left' ? 'flex-start' : style.align === 'right' ? 'flex-end' : 'center',
         justifyContent: 'center',
-        gap: `${style.gap}px`,
-        padding: `${style.padding}px`,
+        gap: `${style.gap * layoutScale}px`,
+        padding: `${style.padding * layoutScale}px`,
         borderRadius: `${style.borderRadius}px`,
         boxShadow: style.shadow === 'none' ? 'none' :
             style.shadow === 'sm' ? 'var(--shadow-sm)' :
@@ -45,7 +51,7 @@ export const Canvas = forwardRef(({ banner, sizeOverride, mediaOverride, videoPl
         display: 'flex',
         flexDirection: 'column',
         alignItems: style.align === 'left' ? 'flex-start' : style.align === 'right' ? 'flex-end' : 'center',
-        gap: `${style.gap}px`,
+        gap: `${style.gap * layoutScale}px`,
         width: '100%'
     };
 
@@ -89,7 +95,7 @@ export const Canvas = forwardRef(({ banner, sizeOverride, mediaOverride, videoPl
                 <div style={contentStyle}>
                     {content.title && (
                         <h1 style={{
-                            fontSize: `${style.fontSizeTitle}px`,
+                            fontSize: `${style.fontSizeTitle * layoutScale}px`,
                             fontWeight: 700,
                             lineHeight: 1.2,
                             whiteSpace: 'pre-wrap',
@@ -101,7 +107,7 @@ export const Canvas = forwardRef(({ banner, sizeOverride, mediaOverride, videoPl
 
                     {content.subtitle && (
                         <p style={{
-                            fontSize: `${style.fontSizeSubtitle}px`,
+                            fontSize: `${style.fontSizeSubtitle * layoutScale}px`,
                             opacity: 0.9,
                             whiteSpace: 'pre-wrap',
                             textAlign: style.align
@@ -112,12 +118,12 @@ export const Canvas = forwardRef(({ banner, sizeOverride, mediaOverride, videoPl
 
                     {content.cta && (
                         <button style={{
-                            marginTop: '16px',
+                            marginTop: `${16 * layoutScale}px`,
                             backgroundColor: style.primaryColor,
                             color: style.secondaryColor,
-                            padding: '20px 40px',
+                            padding: `${20 * layoutScale}px ${40 * layoutScale}px`,
                             borderRadius: '50px', // Standard rounded CTA
-                            fontSize: `${style.fontSizeSubtitle * 0.8}px`, // Relative size
+                            fontSize: `${(style.fontSizeSubtitle * 0.8) * layoutScale}px`, // Relative size
                             fontWeight: 600,
                             border: 'none',
                             cursor: 'pointer'
