@@ -24,7 +24,7 @@ export const TextController = ({ content, updateContent }) => {
             </div>
 
             <div>
-                <Label>Button Text (CTA)</Label>
+                <Label>CTA</Label>
                 <Input
                     value={content.cta}
                     onChange={(e) => updateContent('cta', e.target.value)}

@@ -60,32 +60,7 @@ export const ImageController = ({ image, updateImage }) => {
                 )}
             </div>
 
-            <div>
-                <Label>Product Image</Label>
-                <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                    {image.product ? (
-                        <div style={{ position: 'relative', width: '60px', height: '60px', borderRadius: '8px', overflow: 'hidden', border: '1px solid var(--color-border)' }}>
-                            <img src={image.product} alt="prod" style={{ width: '100%', height: '100%', objectFit: 'contain', background: '#f0f0f0' }} />
-                            <button
-                                onClick={() => removeImage('product')}
-                                style={{ position: 'absolute', top: 0, right: 0, background: 'rgba(0,0,0,0.5)', color: 'white', padding: 2 }}
-                            >
-                                <X size={12} />
-                            </button>
-                        </div>
-                    ) : (
-                        <div style={{ position: 'relative', flex: 1 }}>
-                            <Input
-                                type="file"
-                                accept="image/*"
-                                onChange={(e) => handleFileChange('product', e)}
-                                style={{ paddingLeft: '32px' }}
-                            />
-                            <Upload size={14} style={{ position: 'absolute', left: '10px', top: '50%', transform: 'translateY(-50%)', color: 'var(--color-text-sub)' }} />
-                        </div>
-                    )}
-                </div>
-            </div>
+
         </Section>
     );
 };
