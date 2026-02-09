@@ -3,8 +3,8 @@ import { useState, useEffect } from 'react';
 const INITIAL_STATE = {
     size: { width: 1080, height: 1080, name: 'SNS Square' },
     content: {
-        title: 'Spring Sale Collection',
-        subtitle: 'Up to 50% Off Everything',
+        title: 'Main Copy',
+        subtitle: 'Please enter a sub-copy',
         cta: 'Shop Now'
     },
     style: {
