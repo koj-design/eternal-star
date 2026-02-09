@@ -5,6 +5,39 @@ export const StyleController = ({ style, updateStyle }) => {
         <Section title="Style & Layout">
             {/* Colors */}
             <Label>Colors</Label>
+
+            {/* Theme Presets */}
+            <div style={{ display: 'flex', gap: '8px', marginBottom: '12px' }}>
+                <button
+                    onClick={() => {
+                        updateStyle('primaryColor', '#000000');
+                        updateStyle('textColor', '#000000');
+                        updateStyle('backgroundColor', '#ffffff');
+                        updateStyle('secondaryColor', '#ffffff');
+                    }}
+                    style={{
+                        flex: 1, padding: '8px', borderRadius: '4px', border: '1px solid #ddd',
+                        background: '#ffffff', color: '#000000', cursor: 'pointer', fontWeight: 600
+                    }}
+                >
+                    White Theme
+                </button>
+                <button
+                    onClick={() => {
+                        updateStyle('primaryColor', '#ffffff');
+                        updateStyle('textColor', '#ffffff');
+                        updateStyle('backgroundColor', '#000000');
+                        updateStyle('secondaryColor', '#000000');
+                    }}
+                    style={{
+                        flex: 1, padding: '8px', borderRadius: '4px', border: '1px solid #333',
+                        background: '#000000', color: '#ffffff', cursor: 'pointer', fontWeight: 600
+                    }}
+                >
+                    Black Theme
+                </button>
+            </div>
+
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '8px', marginBottom: '16px' }}>
                 <div>
                     <Input
@@ -28,9 +61,13 @@ export const StyleController = ({ style, updateStyle }) => {
                     <Input
                         type="color"
                         value={style.textColor}
-                        onChange={(e) => updateStyle('textColor', e.target.value)}
+                        onChange={(e) => {
+                            const val = e.target.value;
+                            updateStyle('textColor', val);
+                            updateStyle('primaryColor', val); // Sync CTA background
+                        }}
                         style={{ padding: 2, height: 36, cursor: 'pointer' }}
-                        title="Text Color"
+                        title="Text Color (Syncs with Button)"
                     />
                 </div>
                 <div>

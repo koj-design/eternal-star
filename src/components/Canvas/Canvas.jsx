@@ -1,15 +1,17 @@
 import { forwardRef } from 'react';
 
-export const Canvas = forwardRef(({ banner, sizeOverride }, ref) => {
+export const Canvas = forwardRef(({ banner, sizeOverride, mediaOverride, videoPlaceholder }, ref) => {
     const { content, style, image } = banner;
     // Use override size if provided, otherwise use banner state size
     const size = sizeOverride || banner.size;
 
+    const isVideo = mediaOverride?.type?.startsWith('video');
+
     const containerStyle = {
         width: `${size.width}px`,
         height: `${size.height}px`,
-        backgroundColor: style.backgroundColor,
-        backgroundImage: image.background ? `url(${image.background})` : 'none',
+        backgroundColor: videoPlaceholder ? '#f0f0f0' : style.backgroundColor, // Gray for placeholder
+        backgroundImage: videoPlaceholder ? 'none' : (isVideo ? 'none' : (mediaOverride ? `url(${URL.createObjectURL(mediaOverride)})` : (image.background ? `url(${image.background})` : 'none'))),
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         display: 'flex',
@@ -26,7 +28,7 @@ export const Canvas = forwardRef(({ banner, sizeOverride }, ref) => {
         overflow: 'hidden',
         // Scale for preview if too large (handled by parent usually, but here strict size)
         transformOrigin: 'center center',
-        color: style.textColor,
+        color: videoPlaceholder ? '#aaa' : style.textColor, // Dim text for placeholder state
         fontFamily: style.fontFamily,
     };
 
@@ -49,48 +51,82 @@ export const Canvas = forwardRef(({ banner, sizeOverride }, ref) => {
 
     return (
         <div ref={ref} className="banner-node" style={containerStyle}>
+            {isVideo && (
+                <video
+                    src={URL.createObjectURL(mediaOverride)}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        zIndex: 0
+                    }}
+                />
+            )}
             <div style={overlayStyle} />
 
-            <div style={contentStyle}>
-                {content.title && (
-                    <h1 style={{
-                        fontSize: `${style.fontSizeTitle}px`,
-                        fontWeight: 700,
-                        lineHeight: 1.2,
-                        whiteSpace: 'pre-wrap',
-                        textAlign: style.align
-                    }}>
-                        {content.title}
-                    </h1>
-                )}
+            {videoPlaceholder ? (
+                <div style={{
+                    position: 'absolute',
+                    inset: 0,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    zIndex: 2,
+                    textAlign: 'center',
+                }}>
+                    <span style={{ fontSize: '1.5rem', fontWeight: 600, color: '#999' }}>
+                        mp4 파일을 첨부해 주세요
+                    </span>
+                </div>
+            ) : (
+                <div style={contentStyle}>
+                    {content.title && (
+                        <h1 style={{
+                            fontSize: `${style.fontSizeTitle}px`,
+                            fontWeight: 700,
+                            lineHeight: 1.2,
+                            whiteSpace: 'pre-wrap',
+                            textAlign: style.align
+                        }}>
+                            {content.title}
+                        </h1>
+                    )}
 
-                {content.subtitle && (
-                    <p style={{
-                        fontSize: `${style.fontSizeSubtitle}px`,
-                        opacity: 0.9,
-                        whiteSpace: 'pre-wrap',
-                        textAlign: style.align
-                    }}>
-                        {content.subtitle}
-                    </p>
-                )}
+                    {content.subtitle && (
+                        <p style={{
+                            fontSize: `${style.fontSizeSubtitle}px`,
+                            opacity: 0.9,
+                            whiteSpace: 'pre-wrap',
+                            textAlign: style.align
+                        }}>
+                            {content.subtitle}
+                        </p>
+                    )}
 
-                {content.cta && (
-                    <button style={{
-                        marginTop: '16px',
-                        backgroundColor: style.primaryColor,
-                        color: style.secondaryColor,
-                        padding: '16px 32px',
-                        borderRadius: '50px', // Standard rounded CTA
-                        fontSize: `${style.fontSizeSubtitle * 0.6}px`, // Relative size
-                        fontWeight: 600,
-                        border: 'none',
-                        cursor: 'pointer'
-                    }}>
-                        {content.cta}
-                    </button>
-                )}
-            </div>
+                    {content.cta && (
+                        <button style={{
+                            marginTop: '16px',
+                            backgroundColor: style.primaryColor,
+                            color: style.secondaryColor,
+                            padding: '20px 40px',
+                            borderRadius: '50px', // Standard rounded CTA
+                            fontSize: `${style.fontSizeSubtitle * 0.8}px`, // Relative size
+                            fontWeight: 600,
+                            border: 'none',
+                            cursor: 'pointer'
+                        }}>
+                            {content.cta}
+                        </button>
+                    )}
+                </div>
+            )}
 
             {image.product && (
                 <img

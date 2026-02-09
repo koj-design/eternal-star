@@ -47,6 +47,32 @@ export const Input = ({ type = 'text', value, onChange, placeholder, style, ...p
     />
 );
 
+export const TextArea = ({ value, onChange, placeholder, style, rows = 3, ...props }) => (
+    <textarea
+        value={value}
+        onChange={onChange}
+        placeholder={placeholder}
+        rows={rows}
+        style={{
+            width: '100%',
+            padding: '8px 12px',
+            fontSize: '0.875rem',
+            borderRadius: 'var(--radius-sm)',
+            border: '1px solid var(--color-border)',
+            backgroundColor: 'var(--color-bg-panel)',
+            color: 'var(--color-text-main)',
+            outline: 'none',
+            resize: 'vertical',
+            fontFamily: 'inherit',
+            transition: 'border-color 0.2s',
+            ...style
+        }}
+        onFocus={(e) => e.target.style.borderColor = 'var(--color-primary)'}
+        onBlur={(e) => e.target.style.borderColor = 'var(--color-border)'}
+        {...props}
+    />
+);
+
 export const Select = ({ value, onChange, options }) => (
     <select
         value={value}

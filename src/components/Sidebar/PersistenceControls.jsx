@@ -1,40 +1,11 @@
-import { useRef } from 'react';
 import { Save, FolderOpen } from 'lucide-react';
 
-export const PersistenceControls = ({ banner, setBannerState }) => {
-    const fileInputRef = useRef(null);
+export const PersistenceControls = ({ banner }) => {
 
     const handleSave = () => {
-        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(banner, null, 2));
-        const link = document.createElement('a');
-        link.href = dataStr;
-        link.download = `banner-project-${new Date().toISOString().slice(0, 10)}.json`;
-        link.click();
-    };
-
-    const handleImport = (e) => {
-        const file = e.target.files[0];
-        if (!file) return;
-
-        const reader = new FileReader();
-        reader.onload = (event) => {
-            try {
-                const importedData = JSON.parse(event.target.result);
-                // Simple validation check
-                if (importedData.size && importedData.content) {
-                    setBannerState(importedData);
-                    alert('Project loaded successfully!');
-                } else {
-                    alert('Invalid project file.');
-                }
-            } catch (err) {
-                console.error('Failed to parse JSON', err);
-                alert('Failed to load project file.');
-            }
-        };
-        reader.readAsText(file);
-        // Reset input
-        e.target.value = null;
+        // Explicitly save to local storage (redundant with auto-save but good for manual confirmation)
+        localStorage.setItem('banner-builder-state-v1', JSON.stringify(banner));
+        alert('Settings have been saved.');
     };
 
     return (
@@ -42,8 +13,8 @@ export const PersistenceControls = ({ banner, setBannerState }) => {
             marginTop: 'auto',
             paddingTop: '20px',
             borderTop: '1px solid var(--color-border)',
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
+            display: 'flex',
+            flexDirection: 'column',
             gap: '8px'
         }}>
             <button
@@ -53,45 +24,20 @@ export const PersistenceControls = ({ banner, setBannerState }) => {
                     alignItems: 'center',
                     justifyContent: 'center',
                     gap: '8px',
-                    padding: '10px',
-                    fontSize: '0.875rem',
-                    backgroundColor: 'var(--color-bg-panel)',
+                    padding: '12px',
+                    fontSize: '1rem',
+                    fontWeight: 600,
+                    backgroundColor: 'var(--color-primary, #000000)',
                     border: '1px solid var(--color-border)',
-                    borderRadius: 'var(--radius-sm)',
+                    borderRadius: 'var(--radius-md)',
                     cursor: 'pointer',
-                    color: 'var(--color-text-main)'
+                    color: 'var(--color-secondary, #ffffff)',
+                    width: '100%'
                 }}
-                title="Save project file (.json)"
+                title="Save current settings"
             >
-                <Save size={14} /> Save
+                <Save size={18} /> Save
             </button>
-
-            <button
-                onClick={() => fileInputRef.current.click()}
-                style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '8px',
-                    padding: '10px',
-                    fontSize: '0.875rem',
-                    backgroundColor: 'var(--color-bg-panel)',
-                    border: '1px solid var(--color-border)',
-                    borderRadius: 'var(--radius-sm)',
-                    cursor: 'pointer',
-                    color: 'var(--color-text-main)'
-                }}
-                title="Load project file (.json)"
-            >
-                <FolderOpen size={14} /> Load
-            </button>
-            <input
-                type="file"
-                ref={fileInputRef}
-                onChange={handleImport}
-                accept=".json"
-                style={{ display: 'none' }}
-            />
         </div>
     );
 };

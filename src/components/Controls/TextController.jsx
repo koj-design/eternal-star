@@ -1,23 +1,25 @@
-import { Section, Label, Input } from './UI';
+import { Section, Label, Input, TextArea } from './UI';
 
 export const TextController = ({ content, updateContent }) => {
     return (
         <Section title="Text Content">
             <div>
                 <Label>Title</Label>
-                <Input
+                <TextArea
                     value={content.title}
                     onChange={(e) => updateContent('title', e.target.value)}
                     placeholder="Enter title..."
+                    rows={2}
                 />
             </div>
 
             <div>
                 <Label>Subtitle</Label>
-                <Input
+                <TextArea
                     value={content.subtitle}
                     onChange={(e) => updateContent('subtitle', e.target.value)}
                     placeholder="Enter subtitle..."
+                    rows={3}
                 />
             </div>
 

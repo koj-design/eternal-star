@@ -27,6 +27,7 @@ function App() {
           updateContent={updateContent}
           updateStyle={updateStyle}
           updateImage={updateImage}
+          onSave={() => bannerGridRef.current?.downloadAll()}
         />
       </aside>
 

@@ -6,7 +6,7 @@ import { StyleController } from '../Controls/StyleController';
 import { ImageController } from '../Controls/ImageController';
 import { PersistenceControls } from './PersistenceControls';
 
-export const Sidebar = ({ banner, setBannerState, updateSize, updateContent, updateStyle, updateImage }) => {
+export const Sidebar = ({ banner, setBannerState, updateSize, updateContent, updateStyle, updateImage, onSave }) => {
     const [theme, setTheme] = useState('light');
 
     useEffect(() => {
@@ -56,7 +56,7 @@ export const Sidebar = ({ banner, setBannerState, updateSize, updateContent, upd
             <ImageController image={banner.image} updateImage={updateImage} />
 
             {/* Persistence Controls at Bottom */}
-            <PersistenceControls banner={banner} setBannerState={setBannerState} />
+            <PersistenceControls banner={banner} />
         </div>
     );
 };
