@@ -338,7 +338,7 @@ export const BannerGrid = forwardRef(({ banner }, ref) => {
                                                 overflow: 'hidden',
                                                 boxShadow: isSelected ? '0 0 0 3px var(--color-primary, #3b82f6)' : 'var(--shadow-md)',
                                                 backgroundColor: 'var(--color-bg-panel)',
-                                                width: PREVIEW_WIDTH,
+                                                width: v.width * scale,
                                                 height: v.height * scale,
                                                 cursor: 'pointer',
                                                 transition: 'box-shadow 0.2s',
